@@ -44,7 +44,17 @@ class City:
         return d
 
     def co2_to(self, other: 'City') -> float:
-        raise NotImplementedError
+        d = self.distance_to(self, other)
+        # d < 1000km : 200kg CO2 / km / person
+        # 1000km < d < 8000km : 250kg CO2 / km / person
+        # d > 8000km : 300kg CO2 / km / person
+        if d <= 1000.:
+            co2 = self.attendees * 200. * d
+        elif d <= 8000.:
+            c02 = self.attendees * (200. * 1000. + 250. * (d - 1000.))
+        elif d > 8000.:
+            co2 = self.attendees * (200. * 1000. + 250. * 7000. + 300. * (d-8000.))
+        return co2
 
 
 class CityCollection:
