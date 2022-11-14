@@ -1,5 +1,6 @@
 from typing import Dict, List, Tuple
 import math
+import matplotlib.pyplot as plt
 
 class City:
     
@@ -129,7 +130,26 @@ class CityCollection:
         for i in range(0, len(self.cities)):
             emissions.append([self.cities[i].city, self.total_co2(self.cities[i])])
         emissions = sorted(emissions,key=lambda x: (x[1]))
-        print(emissions)
+        return emissions
 
     def plot_top_emitters(self, city: City, n: int, save: bool):
-        raise NotImplementedError
+        emissions = self.sorted_by_emissions()
+        emissions_other = emissions[n:]
+        emissions = emissions[0:n]
+        temp = ['Other', 0]
+        for i in range(0, len(emissions_other)):
+            temp[1] += emissions_other[i][1]
+        emissions.append(temp)
+        emissions_labels = []
+        emissions_values = []
+        for i in range(0, len(emissions)):
+            emissions_labels.append(emissions[i][0])
+            emissions_values.append(emissions[i][1])
+        plt.bar(emissions_labels, emissions_values)
+        plt.xlabel("City")
+        plt.ylabel("CO2 emissions (tonnes)")
+        plt.yscale("log")
+        plt.show()
+
+        
+
