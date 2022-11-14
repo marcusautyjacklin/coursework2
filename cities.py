@@ -40,23 +40,35 @@ class City:
         # Approx radius of the Earth in km:
         R = 6371
         # Calculate distance between two cities using the Haversine formula:
-        d = 2*R*math.asin(math.sqrt((math.sin((other.latitude-self.latitude)/2)**2) + math.cos(self.latitude)*math.cos(other.latitude)*(math.sin((other.longitude-self.longitude)/2)**2)))
+        phi1 = (self.latitude*(math.pi/180))
+        lambda1 = (self.longitude*(math.pi/180))
+        phi2 = (other.latitude*(math.pi/180))
+        lambda2 = (other.longitude*(math.pi/180))
+
+        d = 2*R*math.asin(math.sqrt(((math.sin((phi2-phi1)/2))**2) + (math.cos(phi1))*(math.cos(phi2))*((math.sin(((lambda2)-(lambda1))/2))**2)))
         # Return distance between two cities:
         return d
 
     def co2_to(self, other: 'City') -> float:
         # Approx radius of the Earth in km:
         R = 6371
-        d = 2*R*math.asin(math.sqrt((math.sin((other.latitude-self.latitude)/2)**2) + math.cos(self.latitude)*math.cos(other.latitude)*(math.sin((other.longitude-self.longitude)/2)**2)))
+
+        
+        phi1 = (self.latitude*(math.pi/180))
+        lambda1 = (self.longitude*(math.pi/180))
+        phi2 = (other.latitude*(math.pi/180))
+        lambda2 = (other.longitude*(math.pi/180))
+
+        d = 2*R*math.asin(math.sqrt(((math.sin((phi2-phi1)/2))**2) + (math.cos(phi1))*(math.cos(phi2))*((math.sin(((lambda2)-(lambda1))/2))**2)))
         #          d < 1000km : 200kg CO2 / km / person
         # 1000km < d < 8000km : 250kg CO2 / km / person
         #          d > 8000km : 300kg CO2 / km / person
         if d <= 1000.:
             co2 = self.attendees * 200. * d
         elif d <= 8000.:
-            co2 = self.attendees * (200. * 1000. + 250. * (d - 1000.))
+            co2 = self.attendees * ((200. * 1000.) + (250. * (d - 1000.)))
         elif d > 8000.:
-            co2 = self.attendees * (200. * 1000. + 250. * 7000. + 300. * (d-8000.))
+            co2 = self.attendees * ((200. * 1000.) + (250. * 7000.) + (300. * (d-8000.)))
         return co2
 
 
@@ -132,8 +144,8 @@ class CityCollection:
         emissions = sorted(emissions,key=lambda x: (x[1]))
         return emissions
 
-    def plot_top_emitters(self, city: City, n: int, save: bool):
-        emissions = self.sorted_by_emissions()
+    def plot_top_emitters(self, city: City, n=10, save=False):
+        emissions = list(self.co2_by_country(city).items())
         emissions_other = emissions[n:]
         emissions = emissions[0:n]
         temp = ['Other', 0]
