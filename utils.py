@@ -29,7 +29,3 @@ def read_attendees_file(filepath: Path) -> CityCollection:
     return collection, cities_dict
 
 
-filepath = Path("attendee_locations.csv")
-collection, cities_dict = read_attendees_file(Path("attendee_locations.csv"))
-
-
