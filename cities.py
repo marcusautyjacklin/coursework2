@@ -32,7 +32,7 @@ class City:
         self.longitude = longitude
 
     def __str__(self):
-        return f"{self.__class__.__name__}(City = {self.city}, Country = {self.country}, Attendees = {self.attendees}, Latitude = {self.latitude}, Longitude = {self.longitude})"
+        return f"{self.__class__.__name__}(\n   City = {self.city},\n   Country = {self.country},\n   Attendees = {self.attendees},\n   Latitude = {self.latitude},\n   Longitude = {self.longitude}\n)"
 
     def distance_to(self, other: 'City') -> float:
         raise NotImplementedError
