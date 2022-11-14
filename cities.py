@@ -125,7 +125,11 @@ class CityCollection:
         return f"Host city: {other.city} ({other.country})\nTotal CO2: {co2_tonnes} tonnes\nTotal attendees travelling to {other.city} from {len(self.cities)} different cities: {round(self.total_attendees())}"
 
     def sorted_by_emissions(self) -> List[Tuple[str, float]]:
-        raise NotImplementedError
+        emissions = []
+        for i in range(0, len(self.cities)):
+            emissions.append([self.cities[i].city, self.total_co2(self.cities[i])])
+        emissions = sorted(emissions,key=lambda x: (x[1]))
+        print(emissions)
 
     def plot_top_emitters(self, city: City, n: int, save: bool):
         raise NotImplementedError
