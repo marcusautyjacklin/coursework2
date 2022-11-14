@@ -1,4 +1,5 @@
 from typing import Dict, List, Tuple
+import math
 
 class City:
     
@@ -35,7 +36,12 @@ class City:
         return f"{self.__class__.__name__}(\n   City = {self.city},\n   Country = {self.country},\n   Attendees = {self.attendees},\n   Latitude = {self.latitude},\n   Longitude = {self.longitude}\n)"
 
     def distance_to(self, other: 'City') -> float:
-        raise NotImplementedError
+        # Approx radius of the Earth in km:
+        R = 6371
+        # Calculate distance between two cities using the Haversine formula:
+        d = 2*R*math.asin(math.sqrt((math.sin((other.latitude-self.latitude)/2)**2) + math.cos(self.latitude)*math.cos(other.latitude)*(math.sin((other.longitude-self.longitude)/2)**2)))
+        # Return distance between two cities:
+        return d
 
     def co2_to(self, other: 'City') -> float:
         raise NotImplementedError
