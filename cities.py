@@ -78,7 +78,7 @@ class CityCollection:
         return countries_list
 
     def total_attendees(self) -> int:
-        total = 0
+        total = 0.
         # Iterate through constituent City classes of CityCollection and sum their attendees.
         for i in range(0, len(self.cities)):
             total += self.cities[i].attendees
@@ -86,10 +86,16 @@ class CityCollection:
 
 
     def total_distance_travel_to(self, city: City) -> float:
-        raise NotImplementedError
+        total_distance = 0.
+        for i in range(0, len(self.cities)):
+            total_distance += (self.cities[i].distance_to(city) * self.cities[i].attendees)
+        return total_distance
 
     def travel_by_country(self, city: City) -> Dict[str, float]:
-        raise NotImplementedError
+        travel_dist_dict = {}
+        for i in range(0, len(self.cities)):
+            travel_dist_dict[self.cities[i].city] = self.cities[i].distance_to(city) * self.cities[i].attendees
+        return travel_dist_dict
 
     def total_co2(self, city: City) -> float:
         raise NotImplementedError
