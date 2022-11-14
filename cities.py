@@ -1,7 +1,35 @@
 from typing import Dict, List, Tuple
 
 class City:
-    ...
+    
+    def __init__(self, city, country, attendees, latitude, longitude):
+        if not isinstance(city, str):
+            raise TypeError('Input {} for city is not a string'.format(city))
+
+        if not isinstance(country, str):
+            raise TypeError('Input {} for country is not a string'.format(country))
+
+        if not isinstance(attendees, int):
+            raise TypeError
+        elif attendees < 0:
+            raise ValueError('Input {} for attendees is negative'.format(attendees))
+
+        if not isinstance(latitude, float):
+            raise TypeError
+        elif not -90. <= latitude <= 90.:
+            raise ValueError('Input {} for longitude is not within range -90 to 90 degrees'.format(latitude))
+
+        if not isinstance(longitude, float):
+            raise TypeError
+        elif not -180. <= longitude <= 180.:
+            raise ValueError('Input {} for longitude is not within range -90 to 90 degrees'.format(longitude))
+
+        self.city = city
+        self.country = country
+        self.attendees = attendees
+        self.latitude = latitude
+        self.longitude = longitude
+
     def distance_to(self, other: 'City') -> float:
         raise NotImplementedError
 
