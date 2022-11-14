@@ -31,6 +31,10 @@ class City:
         self.latitude = latitude
         self.longitude = longitude
 
+    def __str__(self):
+        return 'City: '+ str(self.city) + '\nCountry: '+ str(self.country) + '\nAttendees: '+ str(self.attendees) + '\nCoordinates: '+ str(self.latitude)+', ' + str(self.longitude)
+        raise NotImplementedError
+
     def distance_to(self, other: 'City') -> float:
         raise NotImplementedError
 
