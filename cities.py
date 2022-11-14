@@ -69,7 +69,11 @@ class CityCollection:
         self.cities = list_of_cities
 
     def countries(self) -> List[str]:
-        raise NotImplementedError
+        countries = []
+        for i in range(0, len(self.cities)):
+            if not self.cities[i].country in countries:
+                countries.append(self.cities[i].countries)
+        return countries
 
     def total_attendees(self) -> int:
         raise NotImplementedError
