@@ -71,9 +71,8 @@ class CityCollection:
     def countries(self) -> List[str]:
         countries_list = []
         for i in range(0, len(self.cities)):
-            test_country = self.cities[i]
-            if not test_country.country in countries_list:
-                countries_list.append(test_country.country)
+            if not self.cities[i].country in countries_list:
+                countries_list.append(self.cities[i].country)
         return countries_list
 
     def total_attendees(self) -> int:
