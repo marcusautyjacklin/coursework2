@@ -103,8 +103,11 @@ class CityCollection:
                     travel_dist_dict[countries_list[i]] += self.cities[j].distance_to(other) * self.cities[j].attendees
         return travel_dist_dict
 
-    def total_co2(self, city: City) -> float:
-        raise NotImplementedError
+    def total_co2(self, other: City) -> float:
+        total_co2 = 0.
+        for i in range(0, len(self.cities)):
+            total_co2 += (self.cities[i].co2_to(other) * self.cities[i].attendees)
+        return total_co2
 
     def co2_by_country(self, other: City) -> Dict[str, float]:
         travel_co2_dict = {}
