@@ -53,7 +53,7 @@ class City:
         if d <= 1000.:
             co2 = self.attendees * 200. * d
         elif d <= 8000.:
-            c02 = self.attendees * (200. * 1000. + 250. * (d - 1000.))
+            co2 = self.attendees * (200. * 1000. + 250. * (d - 1000.))
         elif d > 8000.:
             co2 = self.attendees * (200. * 1000. + 250. * 7000. + 300. * (d-8000.))
         return co2
