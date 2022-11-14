@@ -14,7 +14,7 @@ def read_attendees_file(filepath: Path) -> CityCollection:
 
     for row in csv_file:
         name = row[3]
-        name.replace(" ","_")
+        name = name.replace(" ","_")
         name = name.lower()
         print(type(name))
         variables[name] = City(str(row[3]), str(row[1]), int(row[0]), float(row[4]), float(row[5]))
