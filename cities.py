@@ -35,19 +35,21 @@ class City:
     def __str__(self):
         return f"{self.__class__.__name__}(\n   City = {self.city},\n   Country = {self.country},\n   Attendees = {self.attendees},\n   Latitude = {self.latitude},\n   Longitude = {self.longitude}\n)"
 
-    def distance_to(self, other: 'City') -> float:
+    def distance_to(self, city: 'City') -> float:
         # Approx radius of the Earth in km:
         R = 6371
         # Calculate distance between two cities using the Haversine formula:
-        d = 2*R*math.asin(math.sqrt((math.sin((other.latitude-self.latitude)/2)**2) + math.cos(self.latitude)*math.cos(other.latitude)*(math.sin((other.longitude-self.longitude)/2)**2)))
+        d = 2*R*math.asin(math.sqrt((math.sin((city.latitude-self.latitude)/2)**2) + math.cos(self.latitude)*math.cos(city.latitude)*(math.sin((city.longitude-self.longitude)/2)**2)))
         # Return distance between two cities:
         return d
 
-    def co2_to(self, other: 'City') -> float:
-        d = self.distance_to(self, other)
-        # d < 1000km : 200kg CO2 / km / person
+    def co2_to(self, city: 'City') -> float:
+        print(city)
+        print(self)
+        d = self.distance_to(self, city)
+        #          d < 1000km : 200kg CO2 / km / person
         # 1000km < d < 8000km : 250kg CO2 / km / person
-        # d > 8000km : 300kg CO2 / km / person
+        #          d > 8000km : 300kg CO2 / km / person
         if d <= 1000.:
             co2 = self.attendees * 200. * d
         elif d <= 8000.:
@@ -93,8 +95,12 @@ class CityCollection:
 
     def travel_by_country(self, city: City) -> Dict[str, float]:
         travel_dist_dict = {}
-        for i in range(0, len(self.cities)):
-            travel_dist_dict[self.cities[i].city] = self.cities[i].distance_to(city) * self.cities[i].attendees
+        countries_list = self.countries()
+        for i in range(0, len(countries_list)):
+            travel_dist_dict[countries_list[i]] = 0.
+            for j in range(0, len(self.cities)):
+                if self.cities[j].country == countries_list[i]:
+                    travel_dist_dict[countries_list[i]] += self.cities[j].distance_to(city) * self.cities[j].attendees
         return travel_dist_dict
 
     def total_co2(self, city: City) -> float:
