@@ -144,8 +144,9 @@ class CityCollection:
         emissions = sorted(emissions,key=lambda x: (x[1]))
         return emissions
 
-    def plot_top_emitters(self, city: City, n=10, save=False):
-        emissions = list(self.co2_by_country(city).items())
+    def plot_top_emitters(self, other: City, n=10, save=False):
+        emissions = list(self.co2_by_country(other).items())
+        emissions = sorted(emissions, key=lambda x : x[1], reverse=True)
         emissions_other = emissions[n:]
         emissions = emissions[0:n]
         temp = ['Other', 0]
@@ -157,11 +158,21 @@ class CityCollection:
         for i in range(0, len(emissions)):
             emissions_labels.append(emissions[i][0])
             emissions_values.append(emissions[i][1])
+        fig = plt.figure(figsize=(6,4), dpi = 200)
+        fig.set_tight_layout(True)
+        plt.tight_layout()
         plt.bar(emissions_labels, emissions_values)
         plt.xlabel("City")
+        plt.xticks(fontsize=6, rotation = 90)
+        plt.yticks(fontsize=6)
         plt.ylabel("CO2 emissions (tonnes)")
         plt.yscale("log")
-        plt.show()
+        plt.show(block=False)
+        if save == True:
+            filename = other.city
+            filename = filename.replace(" ","_")
+            filename = filename.lower()
+            plt.savefig(filename)
 
         
 
