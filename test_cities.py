@@ -16,11 +16,13 @@ def testClasses():
     algiers = City('Algiers', 'Algeria', 1, 28.0000272,	2.9999825)
     canberra = City('Canberra','Australia', 54, -35.2975906, 149.1012676)
     oxford = City('Oxford', 'United Kingdom', 55, 51.7520131, -1.2578499)
-
     city_collection = CityCollection([zurich, san_francisco, algiers, canberra, london, paris, toronto, beijing, los_angeles, oxford])
-
     return london, paris, toronto, los_angeles, beijing, san_francisco, zurich, algiers, canberra, oxford, city_collection 
 
+@pytest.fixture
+def testFile():
+    filepath = Path('test_attendee_locations.csv')
+    return filepath
 ## City class tests ##
 
 def test_City_constructor_invalid_input_city(testClasses):
@@ -190,9 +192,9 @@ def test_CityCollection_co2_by_country(testClasses):
     if not isinstance(test, dict):
         raise TypeError('Output of method should be a dictionary.')
     elif not isinstance(list(test.items())[0][0], str):
-        raise TypeError('Output dictionary should have keys of tyoe: string.')
+        raise TypeError('Output dictionary should have keys of type: string.')
     elif not isinstance(list(test.items())[0][1], float):
-        raise TypeError('Output dictionary should have keys of tyoe: float.')
+        raise TypeError('Output dictionary should have keys of type: float.')
     assert test == {'United Kingdom': 8038286.548084285, 'France': 0., 'Canada': 129070514.6320648}
 
 def test_CityCollection_total_co2(testClasses):
@@ -217,5 +219,18 @@ def test_CityCollection_sorted_by_emissions(testClasses):
     assert len(test) == len(collection.cities), 'Cities in CityCollection object are missing from the sorted list of emissions.'
 
 def test_CityCollection_summary(testClasses):
-    
-    raise NotImplementedError
+    test = testClasses[10]
+    with pytest.raises(TypeError) as exception:
+        test.summary('London')
+
+def test_read_attendees_file(testFile):
+    filepath = testFile
+    test, test_dict = read_attendees_file(filepath)
+    if not isinstance(test_dict, dict):
+        raise TypeError('Output from read_attendees_file should be a dictionary and a list.')
+    elif not isinstance(test, CityCollection):
+        raise TypeError('Output from read_attendees_file should be a dictionary and a list.')
+    if not isinstance(list(test_dict.items())[0][0], str):
+        raise TypeError('Output dictionary should have keys of tyoe: string.')
+    elif not isinstance(list(test_dict.items())[0][1], int):
+        raise TypeError('Output dictionary should have keys of tyoe: float.')
