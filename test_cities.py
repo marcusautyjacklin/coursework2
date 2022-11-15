@@ -21,12 +21,6 @@ def testClasses():
 
     return london, paris, toronto, los_angeles, beijing, san_francisco, zurich, algiers, canberra, oxford, city_collection 
 
-## Read file test ##
-
-def test_Read_attendees_file():
-    raise NotImplementedError
-
-
 ## City class tests ##
 
 def test_City_constructor_invalid_input_city(testClasses):
@@ -101,17 +95,17 @@ def test_City_distance_to_longHaul(testClasses):
 def test_City_co2_to_publicTransport(testClasses):
     london = testClasses[0]
     paris =  testClasses[1]
-    assert london.co2_to(paris) == 8038.286548084285
+    assert london.co2_to(paris) == 8038286.548084285
 
 def test_City_co2_to_shortHaul(testClasses):
     toronto = testClasses[2]
     los_angeles = testClasses[3]
-    assert toronto.co2_to(los_angeles) == 73289.462198646
+    assert toronto.co2_to(los_angeles) == 73289462.198646
 
 def test_City_co2_to_longHaul(testClasses):
     beijing = testClasses[4]
     san_francisco = testClasses[5]
-    assert beijing.co2_to(san_francisco) == 2280993.4606063277
+    assert beijing.co2_to(san_francisco) == 2280993460.6063277
 
 ## CityCollection class tests ##
 
