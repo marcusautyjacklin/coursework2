@@ -147,8 +147,7 @@ class CityCollection:
         if not isinstance(other, City):
             raise TypeError('Input is not a City object. City object is required for this method.')
         co2_tonnes = round(self.total_co2(other)/1000)
-        return print("Host city: ",other.city," (",other.country,")\nTotal CO2: ",co2_tonnes," tonnes\nTotal attendees travelling to ",other.city," from ",len(self.cities)," different cities: ",self.total_attendees(),sep="")
-# print("Host city: {other.city} ({other.country})\nTotal CO2: {co2_tonnes} tonnes\nTotal attendees travelling to {other.city} from {len(self.cities)} different cities: {round(self.total_attendees())}")
+        return print("Host city: ",other.city," (",other.country,")\nTotal CO2: ",co2_tonnes," tonnes\nTotal attendees travelling to ",other.city," from ",len(self.cities)," different cities: ",self.total_attendees(),sep="")    
     
     def sorted_by_emissions(self) -> List[Tuple[str, float]]:
         emissions = []
