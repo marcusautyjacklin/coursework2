@@ -21,7 +21,39 @@ def testClasses():
 
     return london, paris, toronto, los_angeles, beijing, san_francisco, zurich, algiers, canberra, oxford, city_collection 
 
+## Read file test ##
+
+def test_Read_attendees_file():
+    # with 
+
+    raise NotImplementedError
+
+
 ## City class tests ##
+
+def test_City_constructor_invalid_input_city(testClasses):
+    with pytest.raises(TypeError) as exception:
+        test = City(1, 'test', 0, 0., 0.)
+
+def test_City_constructor_invalid_input_country(testClasses):
+    with pytest.raises(TypeError) as exception:
+        test = City('test', 1 , 0, 0., 0.)
+
+def test_City_constructor_invalid_input_attendees(testClasses):
+    with pytest.raises(TypeError) as exception:
+        test = City('test', 'test', 0., 0., 0.)
+
+def test_City_constructor_invalid_input_lat(testClasses):
+    with pytest.raises(TypeError) as exception:
+        test = City('test', 'test', 0, 'test', 0.)
+    with pytest.raises(ValueError) as exception:
+        test = City('test', 'test', 0, 300., 0.)
+
+def test_City_constructor_invalid_input_lon(testClasses):
+    with pytest.raises(TypeError) as exception:
+        test = City('test', 'test', 0, 0., 'test')
+    with pytest.raises(ValueError) as exception:
+        test = City('test', 'test', 0, 0., 300.)
 
 def test_City_distance_to_publicTransport(testClasses):
     london = testClasses[0]
