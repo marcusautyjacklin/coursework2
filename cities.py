@@ -138,7 +138,7 @@ class CityCollection:
             raise TypeError('Input is not a City object. City object is required for this method.')
         total_co2 = 0.
         for i in range(0, len(self.cities)):
-            total_co2 += (self.cities[i].co2_to(other) * self.cities[i].attendees)
+            total_co2 += (self.cities[i].co2_to(other))
         return total_co2
 
     def co2_by_country(self, other: City) -> Dict[str, float]:
