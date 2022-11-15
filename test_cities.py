@@ -115,6 +115,15 @@ def test_City_co2_to_longHaul(testClasses):
 
 ## CityCollection class tests ##
 
+def test_CityCollection_constructor_invalid_input(testClasses):
+    london = testClasses[0]
+    with pytest.raises(TypeError) as exception:
+        test = CityCollection([london, 'test'])
+    with pytest.raises(ValueError) as exception:
+        test = CityCollection([])
+    with pytest.raises(TypeError) as exception:
+        test = CityCollection('test')
+
 # Info about collection #  
 
 def test_CityCollection_countries(testClasses):
@@ -159,7 +168,10 @@ def test_CityCollection_total_distance(testClasses):
     paris = testClasses[1]
     toronto = testClasses[2]
     collection = CityCollection([london,paris,toronto])
-    assert collection.total_distance_travel_to(paris) == 574273.4912686805
+    test = collection.total_distance_travel_to(paris)
+    if not isinstance(test, float):
+        raise TypeError('Output of method should be a float.')
+    assert test == 574273.4912686805
 
 def test_CityCollection_travel_by_country(testClasses):
     london = testClasses[0]
@@ -173,12 +185,37 @@ def test_CityCollection_travel_by_country(testClasses):
         raise TypeError('Output dictionary should have keys of tyoe: string.')
     if not isinstance(list(test.items())[0][1], float):
         raise TypeError('Output dictionary should have keys of tyoe: float.')
+    assert test == {'United Kingdom': 40191.43274042143, 'France': 0., 'Canada': 534082.0585282592}
 
-def tets_CityCollection_co2_by_country(testClasses):
-    raise NotImplementedError
+def test_CityCollection_co2_by_country(testClasses):
+    london = testClasses[0]
+    paris = testClasses[1]
+    toronto = testClasses[2]
+    collection = CityCollection([london,paris,toronto])
+    test = collection.co2_by_country(paris)
+    if not isinstance(test, dict):
+        raise TypeError('Output of method should be a dictionary.')
+    if not isinstance(list(test.items())[0][0], str):
+        raise TypeError('Output dictionary should have keys of tyoe: string.')
+    if not isinstance(list(test.items())[0][1], float):
+        raise TypeError('Output dictionary should have keys of tyoe: float.')
+    assert test == {'United Kingdom': 8038.286548084285, 'France': 0., 'Canada': 129070.5146320648}
 
 def test_CityCollection_total_co2(testClasses):
-    raise NotImplementedError
+    london = testClasses[0]
+    paris = testClasses[1]
+    toronto = testClasses[2]
+    collection = CityCollection([london,paris,toronto])
+    test = collection.total_co2(paris)
+    if not isinstance(test, float):
+        raise TypeError('Output of method should be a float.')
+    assert test == 137108.80118014908
 
 def test_CityCollection_sorted_by_emissions(testClasses):
-    raise NotImplementedError
+    collection = testClasses[10]
+    test = collection.sorted_by_emissions()
+    if not isinstance(test, list):
+        raise TypeError('Output of method should be a list.')
+    for i in range(1, len(test)):
+        assert test[i-1][1] < test[i][1]
+    assert len(test) == len(collection.cities), 'Cities in CityCollection object are missing from the sorted list of emissions.'
