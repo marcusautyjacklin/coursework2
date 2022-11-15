@@ -99,6 +99,7 @@ class CityCollection:
         # Iterate through constituent City classes of CityCollection and sum their attendees.
         for i in range(0, len(self.cities)):
             total += self.cities[i].attendees
+        total = int(total)
         return total
 
 
