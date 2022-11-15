@@ -69,6 +69,8 @@ class City:
             co2 = self.attendees * ((200. * 1000.) + (250. * (d - 1000.)))
         elif d > 8000.:
             co2 = self.attendees * ((200. * 1000.) + (250. * 7000.) + (300. * (d-8000.)))
+        # convert co2 from kg to tonnes:
+        co2 = co2/1000
         return co2
 
 
@@ -134,7 +136,7 @@ class CityCollection:
 
 
     def summary(self, other: City):
-        co2_tonnes = round(self.total_co2(other) / 1000)
+        co2_tonnes = round(self.total_co2(other))
         return f"Host city: {other.city} ({other.country})\nTotal CO2: {co2_tonnes} tonnes\nTotal attendees travelling to {other.city} from {len(self.cities)} different cities: {round(self.total_attendees())}"
 
     def sorted_by_emissions(self) -> List[Tuple[str, float]]:
