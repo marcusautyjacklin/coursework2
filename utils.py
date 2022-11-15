@@ -7,7 +7,7 @@ def read_attendees_file(filepath: Path) -> CityCollection:
     file = open(filepath)
     csv_file = csv.reader(file)
     header = next(csv_file)
-    if not {'N' and 'country' and 'city' and 'lat'and 'lon'} in row:
+    if not {'N' and 'country' and 'city' and 'lat'and 'lon'} in header:
         raise TypeError('Specified input file does not have the required columns. Required columns are: "N", "country", "city", "lat", "lon" in any order.')
     for i in range(0, len(header)):
         if header[i] == 'N':
