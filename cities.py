@@ -55,16 +55,7 @@ class City:
     def co2_to(self, other: 'City') -> float:
         if not isinstance(other, City):
             raise TypeError('Input is not a City object. City object is required for this method.')
-        # Approx radius of the Earth in km:
-        R = 6371
-
-        
-        phi1 = (self.latitude*(math.pi/180))
-        lambda1 = (self.longitude*(math.pi/180))
-        phi2 = (other.latitude*(math.pi/180))
-        lambda2 = (other.longitude*(math.pi/180))
-
-        d = 2*R*math.asin(math.sqrt(((math.sin((phi2-phi1)/2))**2) + (math.cos(phi1))*(math.cos(phi2))*((math.sin(((lambda2)-(lambda1))/2))**2)))
+        d = self.distance_to(other)
         #          d < 1000km : 200kg CO2 / km / person
         # 1000km < d < 8000km : 250kg CO2 / km / person
         #          d > 8000km : 300kg CO2 / km / person
@@ -156,12 +147,13 @@ class CityCollection:
         if not isinstance(other, City):
             raise TypeError('Input is not a City object. City object is required for this method.')
         co2_tonnes = round(self.total_co2(other)/1000)
-        return f"Host city: {other.city} ({other.country})\nTotal CO2: {co2_tonnes} tonnes\nTotal attendees travelling to {other.city} from {len(self.cities)} different cities: {round(self.total_attendees())}"
-
+        return print("Host city: ",other.city," (",other.country,")\nTotal CO2: ",co2_tonnes," tonnes\nTotal attendees travelling to ",other.city," from ",len(self.cities)," different cities: ",self.total_attendees(),sep="")
+# print("Host city: {other.city} ({other.country})\nTotal CO2: {co2_tonnes} tonnes\nTotal attendees travelling to {other.city} from {len(self.cities)} different cities: {round(self.total_attendees())}")
+    
     def sorted_by_emissions(self) -> List[Tuple[str, float]]:
         emissions = []
         for i in range(0, len(self.cities)):
-            emissions.append([self.cities[i].city, self.total_co2(self.cities[i])])
+            emissions.append((self.cities[i].city, self.total_co2(self.cities[i])))
         emissions = sorted(emissions,key=lambda x: (x[1]))
         return emissions
 
