@@ -89,9 +89,11 @@ class CityCollection:
         countries_list = []
         # Iterate through all classes in self.cities:
         for i in range(0, len(self.cities)):
+            # Check if city has any attendees, only add to list if there is more than zero.
+            if self.cities[i].attendees > 0:
             # Check if the country of the City class is already in the list and if not, add it.
-            if not self.cities[i].country in countries_list:
-                countries_list.append(self.cities[i].country)
+                if not self.cities[i].country in countries_list:
+                    countries_list.append(self.cities[i].country)
         return countries_list
 
     def total_attendees(self) -> int:
