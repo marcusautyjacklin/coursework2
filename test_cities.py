@@ -126,7 +126,7 @@ def test_CityCollection_countries(testClasses):
     assert len(countries) == 8
     if not isinstance(countries, list):
         raise TypeError('CityCollection.countries() method output is not a list.')
-    if not len(city_collection.countries()) == len(set(city_collection.countries())):
+    elif not len(city_collection.countries()) == len(set(city_collection.countries())):
         raise ValueError('CityCollection.countries() method produces list with duplicate countries.')
 
 def test_CityCollection_total_attendees(testClasses):
@@ -175,9 +175,9 @@ def test_CityCollection_travel_by_country(testClasses):
     test = collection.travel_by_country(paris)
     if not isinstance(test, dict):
         raise TypeError('Output of method should be a dictionary.')
-    if not isinstance(list(test.items())[0][0], str):
+    elif not isinstance(list(test.items())[0][0], str):
         raise TypeError('Output dictionary should have keys of tyoe: string.')
-    if not isinstance(list(test.items())[0][1], float):
+    elif not isinstance(list(test.items())[0][1], float):
         raise TypeError('Output dictionary should have keys of tyoe: float.')
     assert test == {'United Kingdom': 40191.43274042143, 'France': 0., 'Canada': 534082.0585282592}
 
@@ -189,11 +189,11 @@ def test_CityCollection_co2_by_country(testClasses):
     test = collection.co2_by_country(paris)
     if not isinstance(test, dict):
         raise TypeError('Output of method should be a dictionary.')
-    if not isinstance(list(test.items())[0][0], str):
+    elif not isinstance(list(test.items())[0][0], str):
         raise TypeError('Output dictionary should have keys of tyoe: string.')
-    if not isinstance(list(test.items())[0][1], float):
+    elif not isinstance(list(test.items())[0][1], float):
         raise TypeError('Output dictionary should have keys of tyoe: float.')
-    assert test == {'United Kingdom': 8038.286548084285, 'France': 0., 'Canada': 129070.5146320648}
+    assert test == {'United Kingdom': 8038286.548084285, 'France': 0., 'Canada': 129070514.6320648}
 
 def test_CityCollection_total_co2(testClasses):
     london = testClasses[0]
@@ -203,13 +203,19 @@ def test_CityCollection_total_co2(testClasses):
     test = collection.total_co2(paris)
     if not isinstance(test, float):
         raise TypeError('Output of method should be a float.')
-    assert test == 137108.80118014908
+    assert test == 137108801.18014908
 
 def test_CityCollection_sorted_by_emissions(testClasses):
     collection = testClasses[10]
     test = collection.sorted_by_emissions()
     if not isinstance(test, list):
         raise TypeError('Output of method should be a list.')
+    elif not isinstance(test[0], tuple):
+        raise TypeError('Output of method should be a list with tuple elements')
     for i in range(1, len(test)):
         assert test[i-1][1] < test[i][1]
     assert len(test) == len(collection.cities), 'Cities in CityCollection object are missing from the sorted list of emissions.'
+
+def test_CityCollection_summary(testClasses):
+    
+    raise NotImplementedError
