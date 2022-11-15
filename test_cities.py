@@ -23,7 +23,7 @@ def testClasses():
 
 ## City class tests ##
 
-def test_publicTransport_travel(testClasses):
+def test_City_distance_to_publicTransport(testClasses):
     london = testClasses[0]
     paris = testClasses[1]
     # assert round(london.distance_to(paris),2) == 343.52
@@ -32,7 +32,7 @@ def test_publicTransport_travel(testClasses):
     # assert round(city_collection.cities[cities_dict["london"]].distance_to(city_collection.cities[cities_dict["paris"]]),2) == 343.52
     # raise NotImplementedError
 
-def test_shortHaul_travel(testClasses):
+def test_City_distance_to_shortHaul(testClasses):
     toronto = testClasses[2]
     los_angeles = testClasses[3]
     # assert round(toronto.distance_to(los_angeles),2) == 3493.91
@@ -41,7 +41,7 @@ def test_shortHaul_travel(testClasses):
     # assert round(city_collection.cities[cities_dict["toronto"]].distance_to(city_collection.cities[cities_dict["los_angeles"]]),2) == 3493.91
     # raise NotImplementedError
 
-def test_longHaul_travel(testClasses):
+def test_City_distance_to_longHaul(testClasses):
     beijing = testClasses[4]
     san_francisco = testClasses[5]
     # assert round(beijing.distance_to(san_francisco),2) == 9503.49
@@ -50,7 +50,7 @@ def test_longHaul_travel(testClasses):
     # assert round(city_collection.cities[cities_dict["beijing"]].distance_to(city_collection.cities[cities_dict["san_francisco"]]),2) == 9503.49
     # raise NotImplementedError
 
-def test_publicTransport_co2(testClasses):
+def test_City_co2_to_publicTransport(testClasses):
     london = testClasses[0]
     paris =  testClasses[1]
     # assert round(london.co2_to(paris),2) == 8038.29
@@ -58,7 +58,7 @@ def test_publicTransport_co2(testClasses):
 
     # raise NotImplementedError
 
-def test_shortHaul_co2(testClasses):
+def test_City_co2_to_shortHaul(testClasses):
     toronto = testClasses[2]
     los_angeles = testClasses[3]
     # assert round(toronto.co2_to(los_angeles),2) == 73289.46
@@ -66,7 +66,7 @@ def test_shortHaul_co2(testClasses):
 
     # raise NotImplementedError
 
-def test_longHaul_co2(testClasses):
+def test_City_co2_to_longHaul(testClasses):
     beijing = testClasses[4]
     san_francisco = testClasses[5]
     # assert round(beijing.co2_to(san_francisco),2) == 2280993.46
@@ -78,25 +78,39 @@ def test_longHaul_co2(testClasses):
 
 # Info about collection #  
 
-def test_countries():
-    raise NotImplementedError
+def test_CityCollection_countries(testClasses):
+    city_collection = testClasses[10]
+    countries = city_collection.countries()
+    assert len(countries) == 8
+    if not isinstance(countries, list):
+        raise TypeError('CityCollection.countries() method output is not a list.')
+    if not len(city_collection.countries()) == len(set(city_collection.countries())):
+        raise ValueError('CityCollection.countries() method produces list with duplicate countries.')
 
-def test_attendees():
-    raise NotImplementedError
+    # raise NotImplementedError
+
+def test_CityCollection_total_attendees(testClasses):
+    city_collection = testClasses[10]
+    attendees = city_collection.total_attendees()
+    assert attendees == 1853
+    if not isinstance(attendees, int):
+        raise TypeError('CityCollection.total_attendees() method output is not an integer')
+
+    # raise NotImplementedError
 
 # Info specifc to host-city # 
 
-def test_total_distance():
+def test_CityCollection_total_distance(testClasses):
     raise NotImplementedError
 
-def test_travel_byCountry():
+def test_CityCollection_travel_by_country(testClasses):
     raise NotImplementedError
 
-def tets_co2_byCountry():
+def tets_CityCollection_co2_by_country(testClasses):
     raise NotImplementedError
 
-def test_total_co2():
+def test_CityCollection_total_co2(testClasses):
     raise NotImplementedError
 
-def test_sortedByEmissions():
+def test_CityCollection_sorted_by_emissions(testClasses):
     raise NotImplementedError
