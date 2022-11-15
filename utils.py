@@ -6,8 +6,21 @@ def read_attendees_file(filepath: Path) -> CityCollection:
 
     file = open(filepath)
     csv_file = csv.reader(file)
-    next(csv_file)
-    variables = vars()
+    header = next(csv_file)
+    if not {'N' and 'country' and 'city' and 'lat'and 'lon'} in row:
+        raise TypeError('Specified input file does not have the required columns. Required columns are: "N", "country", "city", "lat", "lon" in any order.')
+    for i in range(0, len(header)):
+        if header[i] == 'N':
+            N = i
+        elif header[i] == 'country':
+            country = i
+        elif header[i] == 'city':
+            city = i
+        elif header[i] == 'lat':
+            lat = i
+        elif header[i] == 'lon':
+            lon = i
+
     cities_dict = {}
     city_list = []
 
@@ -21,7 +34,7 @@ def read_attendees_file(filepath: Path) -> CityCollection:
 
         # Append class to list with for corresponding row in input csv. Dictionary has associated index for each city.
         # Usage: print(city_list[cities_dict["algiers"]])
-        city_list.append(City(str(row[3]), str(row[1]), int(row[0]), float(row[4]), float(row[5])))
+        city_list.append(City(str(row[city]), str(row[country]), int(row[N]), float(row[lat]), float(row[lon])))
 
     # Create city collection class from list of city classes
     collection = CityCollection(city_list)
