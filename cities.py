@@ -1,6 +1,7 @@
 from typing import Dict, List, Tuple
 import math
 import matplotlib.pyplot as plt
+import pytest
 
 class City:
     
@@ -37,6 +38,8 @@ class City:
         return f"{self.__class__.__name__}(\n   City = {self.city},\n   Country = {self.country},\n   Attendees = {self.attendees},\n   Latitude = {self.latitude},\n   Longitude = {self.longitude}\n)"
 
     def distance_to(self, other: 'City') -> float:
+        if not isinstance(other, City):
+            raise TypeError('Input is not a City object. City object is required for this method.')
         # Approx radius of the Earth in km:
         R = 6371
         # Calculate distance between two cities using the Haversine formula:
@@ -50,6 +53,8 @@ class City:
         return d
 
     def co2_to(self, other: 'City') -> float:
+        if not isinstance(other, City):
+            raise TypeError('Input is not a City object. City object is required for this method.')
         # Approx radius of the Earth in km:
         R = 6371
 
@@ -77,12 +82,15 @@ class City:
 class CityCollection:
     
     def __init__(self, list_of_cities: list) -> None:
-
+        
         if not isinstance(list_of_cities, list):
             raise TypeError('Input for list of cities is not a list')
         elif not list_of_cities:
             raise ValueError('Input list of cities is empty')
-
+        else:
+            for i in range(0,len(list_of_cities)):
+                        if not isinstance(list_of_cities[i], City):
+                            raise TypeError('Input list contains elements which are not City objects. All elements in list must be City objects.')
         self.cities = list_of_cities
 
     def countries(self) -> List[str]:
@@ -106,12 +114,16 @@ class CityCollection:
 
 
     def total_distance_travel_to(self, other: City) -> float:
+        if not isinstance(other, City):
+            raise TypeError('Input is not a City object. City object is required for this method.')
         total_distance = 0.
         for i in range(0, len(self.cities)):
             total_distance += (self.cities[i].distance_to(other) * self.cities[i].attendees)
         return total_distance
 
     def travel_by_country(self, other: City) -> Dict[str, float]:
+        if not isinstance(other, City):
+            raise TypeError('Input is not a City object. City object is required for this method.')
         travel_dist_dict = {}
         countries_list = self.countries()
         for i in range(0, len(countries_list)):
@@ -122,23 +134,29 @@ class CityCollection:
         return travel_dist_dict
 
     def total_co2(self, other: City) -> float:
+        if not isinstance(other, City):
+            raise TypeError('Input is not a City object. City object is required for this method.')
         total_co2 = 0.
         for i in range(0, len(self.cities)):
             total_co2 += (self.cities[i].co2_to(other) * self.cities[i].attendees)
         return total_co2
 
     def co2_by_country(self, other: City) -> Dict[str, float]:
+        if not isinstance(other, City):
+            raise TypeError('Input is not a City object. City object is required for this method.')
         travel_co2_dict = {}
         list_countries = self.countries()
         for i in range(0, len(list_countries)):
             travel_co2_dict[list_countries[i]] = 0.
             for j in range(0, len(self.cities)):
                 if self.cities[j].country == list_countries[i]:
-                    travel_co2_dict[list_countries[i]] += self.cities[j].co2_to(other) * self.cities[j].attendees
+                    travel_co2_dict[list_countries[i]] += self.cities[j].co2_to(other)
         return travel_co2_dict
 
 
     def summary(self, other: City):
+        if not isinstance(other, City):
+            raise TypeError('Input is not a City object. City object is required for this method.')
         co2_tonnes = round(self.total_co2(other))
         return f"Host city: {other.city} ({other.country})\nTotal CO2: {co2_tonnes} tonnes\nTotal attendees travelling to {other.city} from {len(self.cities)} different cities: {round(self.total_attendees())}"
 
@@ -150,6 +168,8 @@ class CityCollection:
         return emissions
 
     def plot_top_emitters(self, other: City, n=10, save=False):
+        if not isinstance(other, City):
+            raise TypeError('Input is not a City object. City object is required for this method.')
         emissions = list(self.co2_by_country(other).items())
         emissions = sorted(emissions, key=lambda x : x[1], reverse=True)
         emissions_other = emissions[n:]
