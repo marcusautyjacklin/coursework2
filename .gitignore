@@ -2,3 +2,4 @@ __pycache__/utils.cpython-39.pyc
 __pycache__/cities.cpython-39.pyc
 __pycache__/test_cities.cpython-39-pytest-7.1.1.pyc
 tmp.py
+test_attendee_locations.csv
