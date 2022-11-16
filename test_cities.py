@@ -12,7 +12,7 @@ def testClasses():
     los_angeles = City('Los Angeles', 'United States', 298, 34.0536909, -118.2427666)
     beijing = City('Beijing', 'China', 950, 39.906217, 116.3912757)
     san_francisco = City('San Francisco', 'United States', 64, 37.7792808, -122.4192363)
-    zurich = City('Zurich', 'Switzerland', 52, 47.22, 8.33)
+    zurich = City('Zurich', 'Switzerland', 109, 47.3723941, 8.5423328)
     algiers = City('Algiers', 'Algeria', 1, 28.0000272,	2.9999825)
     canberra = City('Canberra','Australia', 54, -35.2975906, 149.1012676)
     oxford = City('Oxford', 'United Kingdom', 55, 51.7520131, -1.2578499)
@@ -102,12 +102,12 @@ def test_City_co2_to_publicTransport(testClasses):
 def test_City_co2_to_shortHaul(testClasses):
     toronto = testClasses[2]
     los_angeles = testClasses[3]
-    assert toronto.co2_to(los_angeles) == 73289462.198646
+    assert toronto.co2_to(los_angeles) == 77739462.198646
 
 def test_City_co2_to_longHaul(testClasses):
     beijing = testClasses[4]
     san_francisco = testClasses[5]
-    assert beijing.co2_to(san_francisco) == 2280993460.6063277
+    assert beijing.co2_to(san_francisco) == 2708493460.6063275
 
 ## CityCollection class tests ##
 
@@ -134,7 +134,7 @@ def test_CityCollection_countries(testClasses):
 def test_CityCollection_total_attendees(testClasses):
     city_collection = testClasses[10]
     attendees = city_collection.total_attendees()
-    assert attendees == 1853
+    assert attendees == 1910
     if not isinstance(attendees, int):
         raise TypeError('CityCollection.total_attendees() method output is not an integer')
 
@@ -195,7 +195,7 @@ def test_CityCollection_co2_by_country(testClasses):
         raise TypeError('Output dictionary should have keys of type: string.')
     elif not isinstance(list(test.items())[0][1], float):
         raise TypeError('Output dictionary should have keys of type: float.')
-    assert test == {'United Kingdom': 8038286.548084285, 'France': 0., 'Canada': 129070514.6320648}
+    assert test == {'United Kingdom': 8038286.548084285, 'France': 0.0, 'Canada': 133520514.6320648}
 
 def test_CityCollection_total_co2(testClasses):
     london = testClasses[0]
@@ -205,7 +205,7 @@ def test_CityCollection_total_co2(testClasses):
     test = collection.total_co2(paris)
     if not isinstance(test, float):
         raise TypeError('Output of method should be a float.')
-    assert test == 137108801.18014908
+    assert test == 141558801.18014908
 
 def test_CityCollection_sorted_by_emissions(testClasses):
     collection = testClasses[10]
