@@ -216,7 +216,7 @@ def test_CityCollection_sorted_by_emissions(testClasses):
         raise TypeError('Output of method should be a list with tuple elements')
     for i in range(1, len(test)):
         assert test[i-1][1] < test[i][1]
-    assert len(test) == len(collection.cities), 'Cities in CityCollection object are missing from the sorted list of emissions.'
+    assert len(test) == len(collection.city_list), 'city_list in CityCollection object are missing from the sorted list of emissions.'
 
 def test_CityCollection_summary(testClasses):
     test = testClasses[10]
@@ -225,12 +225,6 @@ def test_CityCollection_summary(testClasses):
 
 def test_read_attendees_file(testFile):
     filepath = testFile
-    test, test_dict = read_attendees_file(filepath)
-    if not isinstance(test_dict, dict):
+    test = read_attendees_file(filepath)
+    if not isinstance(test, CityCollection):
         raise TypeError('Output from read_attendees_file should be a dictionary and a list.')
-    elif not isinstance(test, CityCollection):
-        raise TypeError('Output from read_attendees_file should be a dictionary and a list.')
-    if not isinstance(list(test_dict.items())[0][0], str):
-        raise TypeError('Output dictionary should have keys of tyoe: string.')
-    elif not isinstance(list(test_dict.items())[0][1], int):
-        raise TypeError('Output dictionary should have keys of tyoe: float.')
