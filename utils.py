@@ -49,6 +49,6 @@ def read_attendees_file(filepath: Path) -> CityCollection:
     # Create city collection class from list of city classes
     collection = CityCollection(city_list)
 
-    return collection, cities_dict
+    return collection
 
 
