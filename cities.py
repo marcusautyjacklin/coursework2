@@ -91,24 +91,24 @@ class CityCollection:
             for i in range(0,len(list_of_cities)):
                         if not isinstance(list_of_cities[i], City):
                             raise TypeError('Input list contains elements which are not City objects. All elements in list must be City objects.')
-        self.cities = list_of_cities
+        self.city_list = list_of_cities
 
     def countries(self) -> List[str]:
         countries_list = []
-        # Iterate through all classes in self.cities:
-        for i in range(0, len(self.cities)):
+        # Iterate through all classes in self.city_list:
+        for i in range(0, len(self.city_list)):
             # Check if city has any attendees, only add to list if there is more than zero.
-            if self.cities[i].attendees > 0:
+            if self.city_list[i].attendees > 0:
             # Check if the country of the City class is already in the list and if not, add it.
-                if not self.cities[i].country in countries_list:
-                    countries_list.append(self.cities[i].country)
+                if not self.city_list[i].country in countries_list:
+                    countries_list.append(self.city_list[i].country)
         return countries_list
 
     def total_attendees(self) -> int:
         total = 0.
         # Iterate through constituent City classes of CityCollection and sum their attendees.
-        for i in range(0, len(self.cities)):
-            total += self.cities[i].attendees
+        for i in range(0, len(self.city_list)):
+            total += self.city_list[i].attendees
         total = int(total)
         return total
 
@@ -117,8 +117,8 @@ class CityCollection:
         if not isinstance(other, City):
             raise TypeError('Input is not a City object. City object is required for this method.')
         total_distance = 0.
-        for i in range(0, len(self.cities)):
-            total_distance += (self.cities[i].distance_to(other) * self.cities[i].attendees)
+        for i in range(0, len(self.city_list)):
+            total_distance += (self.city_list[i].distance_to(other) * self.city_list[i].attendees)
         return total_distance
 
     def travel_by_country(self, other: City) -> Dict[str, float]:
@@ -128,17 +128,17 @@ class CityCollection:
         countries_list = self.countries()
         for i in range(0, len(countries_list)):
             travel_dist_dict[countries_list[i]] = 0.
-            for j in range(0, len(self.cities)):
-                if self.cities[j].country == countries_list[i]:
-                    travel_dist_dict[countries_list[i]] += self.cities[j].distance_to(other) * self.cities[j].attendees
+            for j in range(0, len(self.city_list)):
+                if self.city_list[j].country == countries_list[i]:
+                    travel_dist_dict[countries_list[i]] += self.city_list[j].distance_to(other) * self.city_list[j].attendees
         return travel_dist_dict
 
     def total_co2(self, other: City) -> float:
         if not isinstance(other, City):
             raise TypeError('Input is not a City object. City object is required for this method.')
         total_co2 = 0.
-        for i in range(0, len(self.cities)):
-            total_co2 += (self.cities[i].co2_to(other))
+        for i in range(0, len(self.city_list)):
+            total_co2 += (self.city_list[i].co2_to(other))
         return total_co2
 
     def co2_by_country(self, other: City) -> Dict[str, float]:
@@ -148,9 +148,9 @@ class CityCollection:
         list_countries = self.countries()
         for i in range(0, len(list_countries)):
             travel_co2_dict[list_countries[i]] = 0.
-            for j in range(0, len(self.cities)):
-                if self.cities[j].country == list_countries[i]:
-                    travel_co2_dict[list_countries[i]] += self.cities[j].co2_to(other)
+            for j in range(0, len(self.city_list)):
+                if self.city_list[j].country == list_countries[i]:
+                    travel_co2_dict[list_countries[i]] += self.city_list[j].co2_to(other)
         return travel_co2_dict
 
 
@@ -158,12 +158,12 @@ class CityCollection:
         if not isinstance(other, City):
             raise TypeError('Input is not a City object. City object is required for this method.')
         co2_tonnes = round(self.total_co2(other)/1000)
-        return print("Host city: ",other.city," (",other.country,")\nTotal CO2: ",co2_tonnes," tonnes\nTotal attendees travelling to ",other.city," from ",len(self.cities)," different cities: ",self.total_attendees(),sep="")    
+        return print("Host city: ",other.city," (",other.country,")\nTotal CO2: ",co2_tonnes," tonnes\nTotal attendees travelling to ",other.city," from ",len(self.city_list)," different cities: ",self.total_attendees(),sep="")    
     
     def sorted_by_emissions(self) -> List[Tuple[str, float]]:
         emissions = []
-        for i in range(0, len(self.cities)):
-            emissions.append((self.cities[i].city, self.total_co2(self.cities[i])))
+        for i in range(0, len(self.city_list)):
+            emissions.append((self.city_list[i].city, self.total_co2(self.city_list[i])))
         emissions = sorted(emissions,key=lambda x: (x[1]))
         return emissions
 
