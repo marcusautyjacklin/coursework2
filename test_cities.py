@@ -82,32 +82,32 @@ def test_City_co2_to_longHaul_invalid_input(testClasses):
 def test_City_distance_to_publicTransport(testClasses):
     london = testClasses[0]
     paris = testClasses[1]
-    assert london.distance_to(paris) == 343.51651914890107
+    assert london.distance_to(paris) == pytest.approx(343.51651914890107)
 
 def test_City_distance_to_shortHaul(testClasses):
     toronto = testClasses[2]
     los_angeles = testClasses[3]
-    assert toronto.distance_to(los_angeles) == 3493.908413422292
+    assert toronto.distance_to(los_angeles) == pytest.approx(3493.908413422292)
 
 def test_City_distance_to_longHaul(testClasses):
     beijing = testClasses[4]
     san_francisco = testClasses[5]
-    assert beijing.distance_to(san_francisco) == 9503.485826688868
+    assert beijing.distance_to(san_francisco) == pytest.approx(9503.485826688868)
 
 def test_City_co2_to_publicTransport(testClasses):
     london = testClasses[0]
     paris =  testClasses[1]
-    assert london.co2_to(paris) == 8038286.548084285
+    assert london.co2_to(paris) == pytest.approx(8038286.548084285)
 
 def test_City_co2_to_shortHaul(testClasses):
     toronto = testClasses[2]
     los_angeles = testClasses[3]
-    assert toronto.co2_to(los_angeles) == 77739462.198646
+    assert toronto.co2_to(los_angeles) == pytest.approx(77739462.198646)
 
 def test_City_co2_to_longHaul(testClasses):
     beijing = testClasses[4]
     san_francisco = testClasses[5]
-    assert beijing.co2_to(san_francisco) == 2708493460.6063275
+    assert beijing.co2_to(san_francisco) == pytest.approx(2708493460.6063275)
 
 ## CityCollection class tests ##
 
@@ -167,7 +167,7 @@ def test_CityCollection_total_distance(testClasses):
     test = collection.total_distance_travel_to(paris)
     if not isinstance(test, float):
         raise TypeError('Output of method should be a float.')
-    assert test == 574273.4912686805
+    assert test == pytest.approx(574273.4912686805)
 
 def test_CityCollection_travel_by_country(testClasses):
     london = testClasses[0]
@@ -181,7 +181,9 @@ def test_CityCollection_travel_by_country(testClasses):
         raise TypeError('Output dictionary should have keys of tyoe: string.')
     elif not isinstance(list(test.items())[0][1], float):
         raise TypeError('Output dictionary should have keys of tyoe: float.')
-    assert test == {'United Kingdom': 40191.43274042143, 'France': 0., 'Canada': 534082.0585282592}
+    assert test['United Kingdom'] == pytest.approx(40191.43274042143)
+    assert test['France'] == pytest.approx(0.)
+    assert test['Canada'] == pytest.approx(534082.0585282592)
 
 def test_CityCollection_co2_by_country(testClasses):
     london = testClasses[0]
@@ -195,7 +197,9 @@ def test_CityCollection_co2_by_country(testClasses):
         raise TypeError('Output dictionary should have keys of type: string.')
     elif not isinstance(list(test.items())[0][1], float):
         raise TypeError('Output dictionary should have keys of type: float.')
-    assert test == {'United Kingdom': 8038286.548084285, 'France': 0.0, 'Canada': 133520514.6320648}
+    assert test['United Kingdom'] == pytest.approx(8038286.548084285)
+    assert test['France'] == pytest.approx(0.0)
+    assert test['Canada'] == pytest.approx(133520514.6320648)
 
 def test_CityCollection_total_co2(testClasses):
     london = testClasses[0]
@@ -205,7 +209,7 @@ def test_CityCollection_total_co2(testClasses):
     test = collection.total_co2(paris)
     if not isinstance(test, float):
         raise TypeError('Output of method should be a float.')
-    assert test == 141558801.18014908
+    assert test == pytest.approx(141558801.18014908)
 
 def test_CityCollection_sorted_by_emissions(testClasses):
     collection = testClasses[10]
